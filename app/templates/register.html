@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <form class="form-center" method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="field">
+            {{ form.username.label(class="label") }}
+
+            {% if form.username.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.username(class="input is-danger", id="username", autocomplete="off") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.username.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+                {% else %}
+                    <div class="control has-icons-right has-icons-left">
+                        {{ form.username(class="input", id="username", autocomplete="off") }}
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-xs"></i>
+                        </span>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user fa-xs"></i>
+                        </span>
+                    </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            {{ form.email.label(class="label") }}
+
+            {% if form.email.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.email(class="input is-danger", id="email") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.email.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.email(class="input", id="email") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope fa-xs"></i>
+                    </span>
+                </div>
+            {% endif %}                
+        </div>
+        <div class="field">
+            {{ form.password.label(class="label") }}
+
+            {% if form.password.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.password(class="input is-danger", id="password") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.password(class="input", id="password") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock fa-xs"></i>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            {{ form.confirm_password.label(class="label") }}
+
+            {% if form.confirm_password.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.confirm_password(class="input is-danger", id="confirm") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.confirm_password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.confirm_password(class="input", id="confirm") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock fa-xs"></i>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="field has-text-centered m-3">
+            <div class="control">
+                {{ form.submit(class="button is-link is-light") }}
+            </div>
+        </div>
+    </form>
+
+    <div class="has-text-centered m-5">
+        <p class="is-small">Already have an account? <a href="{{ url_for('users.login') }}">Sign In</a></p>
+    </div>
+{% endblock %}

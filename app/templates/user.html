@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <div>
+        <h1 class="title has-text-centered mb-1">
+            {{ user.username }}
+        </h1>
+        <p class="has-text-centered is-small is-light-grey">{{ user.role }}</p>
+        <div class="columns mt-6">    
+            <div class="column is-3 is-offset-3">
+                <figure class="image">
+                    <img src="{{ url_for('static', filename='profile_img/' + user.image_file) }}" alt="Avatar">
+                </figure>
+            </div>
+            <div class="column is-4 is-flex is-flex-direction-column is-justify-content-center" id="account-data">
+                <p class="is-size-3">Articles posted: {{ post_count }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

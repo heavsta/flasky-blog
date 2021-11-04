@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    {% if post %}
+        <div class="columns">
+            <div class="column is-10 is-offset-1">
+                <div class="has-text-centered">
+                    <img src="{{ url_for('static', filename='article_img/' + post.picture ) }}" alt="Post image">
+                </div>
+                <h1 class="title mb-1">{{ post.title }}</h1>
+                <small class="has-text-grey-light">{{ post.timestamp.strftime('%B %d, %Y') }}</small>
+                <small><a href="{{ url_for('users.user_show', id=post.author_id) }}">{{ post.author.username }}</a></small>
+                <div class="content mt-3">{{ post.content | safe }}</div>
+            </div>
+        </div>
+    
+        <div class="columns mt-6 mb-6">
+            <div class="column is-10 is-offset-1">
+                <h2 class="title is-4">Comments</h2>
+                {% for comment in post.comments %}
+                    <article class="media">
+                        <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img src="{{ url_for('static', filename='profile_img/' + comment.author.image_file) }}">
+                        </p>
+                        </figure>
+                        <div class="media-content">
+                        <div class="content">
+                            <p>
+                            <strong>{{ comment.author.username }}</strong>
+                            <small class="has-text-grey">{{ comment.timestamp.strftime('%b %-d, %Y at %H:%M') }}</small>
+                            <br>
+                            {{ comment.content | safe }}
+                            <br>
+                            </p>
+                        </div>
+                    </article>
+                {% endfor %}
+                
+                {% if current_user.is_authenticated %}
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                <img src="{{ url_for('static', filename='profile_img/' + current_user.image_file) }}">
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <form action="{{ url_for('articles.comment_new', post_id=post.id) }}" method="POST">
+                                {{ form.hidden_tag() }}
+                                <div class="field">
+                                    {% if form.content.errors %}
+                                        <p class="control">
+                                            {{ form.content(class="textarea", placeholder="Share your thoughts...") }}
+                                        </p>
+                                        <p class="help is-danger">
+                                            {% for error in form.content.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </p>
+                                    {% else %}
+                                        <p class="control">
+                                            {{ form.content(class="textarea", placeholder="Share your thoughts...") }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+                                <div class="field">
+                                    <p class="control">
+                                        {{ form.submit(class="button is-link is-light") }}
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </article>
+                    {% else %}
+                        <p class="mt-6 is-size-5">Want to add a comment? Please <a href="{{ url_for('users.login') }}" class="has-text-weight-bold">Log in</a> first.</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    <small><a href="https://github.com/heavsta" class="has-text-dark">heavsta</a> &copy; {{ now.year }}</small>
+{% endblock %}

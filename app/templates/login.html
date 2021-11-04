@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <div class="has-text-centered m-3">
+        <p class="is-small">Not registered yet? <a href="{{ url_for('users.register') }}">Sign Up</a></p>
+    </div>
+
+    <form class="form-center" method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="field">
+            {{ form.username.label(class="label") }}
+
+            {% if form.username.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.username(class="input is-danger", id="username", autocomplete="off") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.username.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.username(class="input", id="username", autocomplete="off") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user fa-xs"></i>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            {{ form.password.label(class="label") }}
+
+            {% if form.password.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.password(class="input is-danger", id="password") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.password(class="input", id="password") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock fa-xs"></i>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                {{ form.remember(class="checkbox") }}
+                {{ form.remember.label() }}
+                </label>
+            </div>
+        </div>
+        <div class="field has-text-centered m-3">
+            <div class="control">
+                {{ form.submit(class="button is-link is-light") }}
+            </div>
+        </div>
+        <div class="has-text-centered m-5">
+            <p class="is-small"><a href="{{ url_for('users.reset_request') }}">Forgot your Password?</a></p>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1 class="title has-text-centered">Create a new Category</h1>
+
+    <form class="form-center" method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="field">
+            {% if form.name.errors %}
+                <div class="control">
+                    {{ form.name(class="input is-danger", autocomplete="off", placeholder=form.name.label.text) }}
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.name.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control">
+                    {{ form.name(class="input", autocomplete="off", placeholder=form.name.label.text) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="field has-text-centered m-5">
+            <div class="control">
+                {{ form.submit(class="button is-link is-light") }}
+            </div>
+        </div>
+    </form>
+{% endblock %}

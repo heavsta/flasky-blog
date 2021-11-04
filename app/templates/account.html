@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <div>
+        <h1 class="title has-text-centered">
+            My Account 
+            <button class="button edit" title="edit"><i class="fas fa-pen fa-xs"></i></button>
+        </h1>
+        <div class="columns mt-5">    
+            <div class="column is-3 is-offset-3">
+                <figure class="image">
+                    <img class="is-rounded" src="{{ image_file }}" alt="Avatar">
+                </figure>
+            </div>
+            <div class="column is-4 is-flex is-flex-direction-column is-justify-content-center" id="account-data">
+                <ul>
+                    <li class="is-size-4 m-3">
+                        <strong>{{ current_user.username }}</strong>
+                    </li>
+                    <li class="is-size-4 m-3">
+                        <strong>{{ current_user.email }}</strong>
+                    </li>
+                    <li class="is-size-4 m-3"><strong>role: {{ current_user.role }}</strong></li>
+                </ul>
+            </div>
+            <form class="column is-4 is-flex is-flex-direction-column is-justify-content-center is-hidden" id="form-account" method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="field">
+                    {{ form.username.label(class="label") }}
+        
+                    {% if form.username.errors %}
+                        <div class="control has-icons-right has-icons-left">
+                            {{ form.username(class="input is-danger", id="username", autocomplete="off") }}
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle fa-xs"></i>
+                            </span>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user fa-xs"></i>
+                            </span>
+                        </div>
+                        <p class="help is-danger">
+                            {% for error in form.username.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </p>
+                        {% else %}
+                            <div class="control has-icons-right has-icons-left">
+                                {{ form.username(class="input", id="username", autocomplete="off") }}
+                                <span class="icon is-small is-right">
+                                    <i class="fas fa-xs"></i>
+                                </span>
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user fa-xs"></i>
+                                </span>
+                            </div>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    {{ form.email.label(class="label") }}
+        
+                    {% if form.email.errors %}
+                        <div class="control has-icons-right has-icons-left">
+                            {{ form.email(class="input is-danger", id="email") }}
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle fa-xs"></i>
+                            </span>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope fa-xs"></i>
+                            </span>
+                        </div>
+                        <p class="help is-danger">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </p>
+                    {% else %}
+                        <div class="control has-icons-right has-icons-left">
+                            {{ form.email(class="input", id="email") }}
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-xs"></i>
+                            </span>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope fa-xs"></i>
+                            </span>
+                        </div>
+                    {% endif %}                
+                </div>
+                <div class="field">
+                    {{ form.picture.label(class="label") }}
+
+                    {% if form.picture.errors %}
+                        <div class="control has-icons-right has-icons-left">
+                            {{ form.picture(class="input is-danger", id="picture") }}
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle fa-xs"></i>
+                            </span>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope fa-xs"></i>
+                            </span>
+                        </div>
+                        <p class="help is-danger">
+                            {% for error in form.picture.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </p>
+                    {% else %}
+                        <div class="control has-icons-right has-icons-left">
+                            {{ form.picture(class="input", id="picture") }}
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-xs"></i>
+                            </span>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-image fa-xs"></i>
+                            </span>
+                        </div>
+                        <p class="help is-danger" id="pic-err"></p>
+                    {% endif %}
+                </div>
+                <div class="field has-text-centered m-3">
+                    <div class="control">
+                        {{ form.submit(class="button is-link is-light") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

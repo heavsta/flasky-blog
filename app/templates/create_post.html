@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1 class="title has-text-centered">{{ legend }}</h1>
+
+    <form class="form-medium-center" method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="field">
+            {{ form.title.label(class="label") }}
+
+            {% if form.title.errors %}
+                <div class="control">
+                    {{ form.title(class="input is-danger", autocomplete="off") }}
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.title.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control">
+                    {{ form.title(class="input", autocomplete="off") }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            {{ form.category.label(class="label") }}
+
+            {% if form.category.errors %}
+                <div class="select">
+                    {{ form.category(class="select is-danger") }}
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.category.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="select">
+                    {{ form.category(class="select") }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            {{ form.picture.label(class="label") }}
+
+            {% if form.picture.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.picture(class="input is-danger", id="picture") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.picture.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.picture(class="input", id="picture") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-image fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger" id="pic-err"></p>
+            {% endif %}
+        <div class="field">
+            {{ form.content.label(class="label") }}
+
+            {% if form.content.errors %}
+                <div class="control">
+                    {{ form.content(class="textarea is-danger") }}
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.content.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control">
+                    {{ form.content(class="textarea") }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="field has-text-centered m-3">
+            <div class="control">
+                {{ form.submit(class="button is-link is-light") }}
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block endbody %}
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='content') }}
+{% endblock %}

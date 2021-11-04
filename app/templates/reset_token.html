@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1 class="title has-text-centered">Reset Password</h1>
+    <form class="form-center" method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="field">
+            {{ form.password.label(class="label") }}
+
+            {% if form.password.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.password(class="input is-danger", id="password", autocomplete="off") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.password(class="input", id="password", autocomplete="off") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user fa-xs"></i>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            {{ form.confirm_password.label(class="label") }}
+
+            {% if form.confirm_password.errors %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.confirm_password(class="input is-danger", id="confirm", autocomplete="off") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-exclamation-triangle fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user fa-xs"></i>
+                    </span>
+                </div>
+                <p class="help is-danger">
+                    {% for error in form.confirm_password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <div class="control has-icons-right has-icons-left">
+                    {{ form.confirm_password(class="input", id="confirm", autocomplete="off") }}
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-xs"></i>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user fa-xs"></i>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="field has-text-centered m-3">
+            <div class="control">
+                {{ form.submit(class="button is-link is-light") }}
+            </div>
+        </div>
+    </form>
+{% endblock %}

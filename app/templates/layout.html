@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flasky Blog: {% block title %}{{title}}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+  <header class="box">
+    {% if current_user.is_authenticated %}
+      <button class="button is-white" id="menu"><i class="fas fa-bars"></i></button>
+    {% endif %}
+    <div class="container">
+      <div class="columns">
+        <nav class="navbar column is-10 is-offset-1 is-flex" role="navigation" aria-label="main navigation">
+          <div class="navbar-brand">
+            <a class="logo" href="{{url_for('main.index')}}">
+              The Flasky Blog
+            </a>
+          </div>
+        
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-end">
+              {% if current_user.is_authenticated %}
+                <div class="navbar-item">
+                  <a class="columns" href="{{ url_for('users.account') }}">
+                    <div class="column image p-0 mt-2">
+                      <img class="is-rounded" src="{{ url_for('static', filename='profile_img/' + current_user.image_file )}}" alt="Avatar">
+                    </div>
+                    <div class="column">
+                      {{ current_user.username }}
+                    </div>
+                  </a>
+                </div>
+                <div class="navbar-item">
+                  <a href="{{ url_for('users.logout') }}">Log out</a>
+                </div>
+              {% else %}
+                <div class="navbar-item">
+                  <a href="{{ url_for('users.login') }}">Log in</a>
+                </div>
+                <div class="navbar-item">
+                  <a class="button is-link is-light" href="{{ url_for('users.register') }}">Sign up</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container mt-5 mb-5">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+        <div class="notification has-text-centered is-{{ category }}">
+          <button class="delete"></button>
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <aside class="menu has-background-light" id="aside">
+    <p class="menu-label">
+      Administration
+    </p>
+    <ul class="menu-list">
+      <li>
+        <a href="{{ url_for('articles.post_list') }}">Articles</a>
+        <ul>
+          <li><a href="{{ url_for('articles.post_new') }}">New Article</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="{{ url_for('categories.category_list') }}">Categories</a>
+        <ul>
+          <li><a href="{{ url_for('categories.category_new') }}">Add Category</a></li>
+        </ul>
+      </li>
+  </aside>
+  
+  <main class="container pt-4">
+    {% block main %}{% endblock %}
+  </main>
+
+  <footer class="is-flex is-align-items-flex-end is-justify-content-center">
+    {% block footer %}{% endblock %}
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  {% block endbody %}{% endblock %}
+  </body>
+</html>
